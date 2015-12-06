@@ -3,11 +3,11 @@ __author__ = 'alsbi'
 
 from flask import Flask, render_template, send_from_directory, session, request, redirect, url_for
 
-from ..virshlike.manager import Manager
-from ..errors import *
-from ..config import *
+from virshlike.manager import Manager
+from errors import *
+from config import *
 
-app = Flask(__name__, static_url_path = '/vnc')
+app = Flask(__name__, static_url_path = '')
 app.secret_key = SECRET_KEY_APP
 mn = Manager()
 
@@ -81,3 +81,5 @@ def logout():
 def main():
     app.run(debug = True, host = '0.0.0.0')
 
+if __name__ == '__main__':
+    main()
