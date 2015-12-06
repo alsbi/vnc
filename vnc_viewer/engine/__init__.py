@@ -4,9 +4,9 @@ __author__ = 'alsbi'
 from .service import start
 
 
-def maim():
+def main():
     start()
 
 
 if __name__ == '__main__':
-    maim()
+    main()

@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 __author__ = 'alsbi'
 
+
+import os
 from flask import Flask, render_template, send_from_directory, session, request, redirect, url_for
 
 from ..virshlike import Manager
 from vnc_viewer.engine.errors import *
 from ..config import *
 
-app = Flask(__name__, static_url_path = '')
+tmpl_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'templates')
+app = Flask(__name__, static_url_path = '',template_folder=tmpl_dir)
 app.secret_key = SECRET_KEY_APP
 mn = Manager()
 
