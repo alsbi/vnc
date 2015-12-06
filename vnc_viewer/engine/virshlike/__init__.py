@@ -4,7 +4,6 @@ __author__ = 'alsbi'
 import sys
 from collections import OrderedDict
 
-
 import libvirt
 
 from .tools import utils

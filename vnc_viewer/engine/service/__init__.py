@@ -4,7 +4,7 @@ __author__ = 'alsbi'
 from flask import Flask, render_template, send_from_directory, session, request, redirect, url_for
 
 from ..virshlike import Manager
-from ..errors import *
+from vnc_viewer.engine.errors import *
 from ..config import *
 
 app = Flask(__name__, static_url_path = '')
@@ -78,8 +78,6 @@ def logout():
     return redirect(url_for('login'))
 
 
-def main():
+def start():
     app.run(debug = True, host = '0.0.0.0')
 
-if __name__ == '__main__':
-    main()
