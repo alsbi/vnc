@@ -7,8 +7,8 @@ from collections import OrderedDict
 
 import libvirt
 
-from vnc_viewer.virshlike.tools import utils
-from vnc_viewer.config import *
+from .tools import utils
+from ..config import *
 
 
 class Connector(object):

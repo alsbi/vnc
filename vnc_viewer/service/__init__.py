@@ -3,9 +3,9 @@ __author__ = 'alsbi'
 
 from flask import Flask, render_template, send_from_directory, session, request, redirect, url_for
 
-from vnc_viewer.virshlike import Manager
-from vnc_viewer.errors import *
-from vnc_viewer.config import *
+from ..virshlike import Manager
+from ..errors import *
+from ..config import *
 
 app = Flask(__name__, static_url_path = '')
 app.secret_key = SECRET_KEY_APP

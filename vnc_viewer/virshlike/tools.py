@@ -6,7 +6,7 @@ import string
 from random import *
 
 from libvirt import libvirtError
-from vnc_viewer.errors import *
+from ..errors import *
 
 
 class utils(object):
