@@ -46,7 +46,7 @@
             <div class="panel-body">
                 {% for domain in domain_list_inactive %}
                 {% if name %}
-                <p><a class="btn btn-default btn-md btn-block" href="/console/{{domain.UUIDString()}}" role="button">{{domain.name()}}</a>
+                <p><a class="btn btn-primary btn-md btn-block" href="/console/{{domain.UUIDString()}}" role="button">{{domain.name()}}</a>
                 </p>
                 {% else %}
                 <p><a class="btn btn-default btn-md btn-block" href="/console/{{domain.UUIDString()}}" role="button">{{domain.name()}}</a>
