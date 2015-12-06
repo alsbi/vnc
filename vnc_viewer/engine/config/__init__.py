@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 __author__ = 'alsbi'
 
-HOST_LOCAL_VIRSH = '172.16.1.250'
-HOST_REMOTE_VIRSH = 'home.alsbi.ru'
-SASL_USER = "virt"
-SASL_PASS = "ghjvtnjifh"
+HOST_LOCAL_VIRSH = 'libvirt_local or remote host'
+HOST_REMOTE_VIRSH = 'libvirt remote host'
+SASL_USER = "libvirt sasl user"
+SASL_PASS = "libvirt sasl pass"
 
 
-SECRET_KEY_APP = '3dfcvdfgAE34m%&N3]LWX45/dfRT'
+SECRET_KEY_APP = 'random'
 LOGINS = {'admin': 'admin'}
-

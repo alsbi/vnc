@@ -1,6 +1,7 @@
 import re
 import ast
-from setuptools import setup, find_packages
+
+from setuptools import find_packages
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 
@@ -12,22 +13,18 @@ from distutils.core import setup
 
 setup(
     name = 'vnc_viewer',
-    version=version,
+    version = version,
     url = '',
     license = '',
     author = 'a.biryukov',
-    packages=find_packages(),
+    packages = find_packages(),
+    package_data = {'templates': ['html', 'js', 'png']},
     author_email = 'feano4ik@gmail.com',
     description = '',
-    install_requires=['libvirt-python','flask'],
-    entry_points={
-       'console_scripts': [
-           'vnc_daemon=vnc_viewer.engine:main'
-       ],
-   }
+    install_requires = ['libvirt-python', 'flask'],
+    entry_points = {
+        'console_scripts': [
+            'vnc_daemon=vnc_viewer.engine:main'
+        ],
+    }
 )
-
-
-
-
-
