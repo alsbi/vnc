@@ -19,7 +19,7 @@ setup(
     author = 'a.biryukov',
     include_package_data=True,
     packages = find_packages(),
-    package_data = {'templates': ['*.html', '*.js', '*.css', '*.png'],},
+    package_data = {'templates': ['*.html', 'static/*.js', 'static/*.css', 'static/*.png'],},
     author_email = 'feano4ik@gmail.com',
     description = '',
     install_requires = ['libvirt-python', 'flask'],
