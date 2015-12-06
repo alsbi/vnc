@@ -10,7 +10,7 @@ from vnc_viewer.engine.errors import *
 from ..config import *
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'templates')
-app = Flask(__name__, static_url_path = '{template}/static'.format(template=tmpl_dir), template_folder = tmpl_dir)
+app = Flask(__name__, static_url_path = '{template}/static'.format(template = tmpl_dir), template_folder = tmpl_dir)
 app.secret_key = SECRET_KEY_APP
 mn = Manager()
 
@@ -24,12 +24,18 @@ def get_domain_list():
     else:
         return redirect(url_for('login'))
 
-
 @app.route('/console/<vm_name>')
 def get_domain_by_uid(vm_name):
     if 'username' in session:
-        return render_template('console.html', domain_list = mn.get_active_domain(), id = vm_name,
-                               domain_list_inactive = mn.get_inactive_domain())
+        try:
+            return render_template('console.html', domain_list = mn.get_active_domain(), id = vm_name,
+                                   domain_list_inactive = mn.get_inactive_domain(), host = HOST_REMOTE_VIRSH,
+                                   port = mn.get_vnc_port_by_uuid(vm_name),
+                                   password = mn.set_vnc_pass_by_uuid(vm_name))
+        except Error_update_domain as e:
+            if not mn.get_domain_by_uuid(vm_name).isActive():
+                return "<div style='background-color:white'>Connection lost</div>"
+            return repr(e)
     else:
         return redirect(url_for('login'))
 
@@ -39,21 +45,14 @@ def action_domain_by_uid(vm_name, action):
     if 'username' in session:
         if action in ['stop', 'start', 'reboot', 'shutdown', 'reset']:
             getattr(mn, '%s_domain' % action)(vm_name)
-        return redirect(url_for('get_domain_by_uid', vm_name = vm_name))
-    else:
-        return redirect(url_for('login'))
-
-
-@app.route('/view/<vm_name>')
-def get_vnc(vm_name):
-    if 'username' in session:
         try:
-            return render_template('vnc.html', host = HOST_REMOTE_VIRSH, port = mn.get_vnc_port_by_uuid(vm_name),
-                                   password = mn.set_vnc_pass_by_uuid(vm_name))
+            return redirect(url_for('get_domain_by_uid', vm_name = vm_name, host = HOST_REMOTE_VIRSH,
+                                port = mn.get_vnc_port_by_uuid(vm_name),
+                                password = mn.set_vnc_pass_by_uuid(vm_name)))
         except Error_update_domain as e:
-            if not mn.get_domain_by_uuid(vm_name).isActive():
-                return "<div style='background-color:white'>Connection lost</div>"
-            return repr(e)
+                if not mn.get_domain_by_uuid(vm_name).isActive():
+                    return "<div style='background-color:white'>Connection lost</div>"
+                return repr(e)
     else:
         return redirect(url_for('login'))
 
