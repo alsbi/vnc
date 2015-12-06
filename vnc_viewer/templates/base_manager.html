@@ -33,7 +33,7 @@
                             <div class="panel-heading">Active</div>
                             <div class="panel-body">
                                 {% for domain in domain_list %}
-                                {% if domain.UUIDString()== id %}
+                                {% if domain.UUIDString() == id %}
                                 <p><a class="btn btn-primary btn-md btn-block" href="/console/{{domain.UUIDString()}}"
                                       role="button">{{domain.name()}}</a>
                                 </p>
@@ -50,7 +50,7 @@
                             <div class="panel-heading">Inactive</div>
                             <div class="panel-body">
                                 {% for domain in domain_list_inactive %}
-                                {% if name %}
+                                {% if domain.UUIDString() == id %}
                                 <p><a class="btn btn-primary btn-md btn-block" href="/console/{{domain.UUIDString()}}"
                                       role="button">{{domain.name()}}</a>
                                 </p>
@@ -75,6 +75,9 @@
             </div>
         </div>
     </div>
+</div>
+<div>
+
 </div>
 </body>
 </html>
