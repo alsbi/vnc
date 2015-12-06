@@ -20,9 +20,9 @@ mn = Manager()
 def get_domain_list():
     if 'username' in session:
         return render_template('consoles.html',
-                               domain_list = mn.get_active_domain(),
+                               domain_list = mn.get_active_domains(),
                                info = mn.status(),
-                               domain_list_inactive = mn.get_inactive_domain())
+                               domain_list_inactive = mn.get_inactive_domains())
     else:
         return redirect(url_for('login'))
 
@@ -53,8 +53,8 @@ def view_domain(vm_name):
         password = ''
     return render_template('console.html',
                            host = HOST_REMOTE_VIRSH,
-                           domain_list = mn.get_active_domain(), id = vm_name,
-                           domain_list_inactive = mn.get_inactive_domain(),
+                           domain_list = mn.get_active_domains(), id = vm_name,
+                           domain_list_inactive = mn.get_inactive_domains(),
                            port = mn.get_vnc_port_by_uuid(vm_name),
                            password = password)
 

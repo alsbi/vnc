@@ -46,7 +46,7 @@ class Manager(object):
             ('memory usage', '\n'.join(["{key}:{value}".format(key = key, value = memory) for key, memory in
                                         self.conn.getMemoryParameters().items()])),
             ('all domain', len(self.conn.listAllDomains())),
-            ('started domain', len(self.get_active_domain()))
+            ('started domain', len(self.get_active_domains()))
         ])
 
     def start_domain(self, uuid):
@@ -92,13 +92,13 @@ class Manager(object):
     def get_domain_by_uuid(self, uuid):
         return self.conn.lookupByUUIDString(uuid)
 
-    def get_active_domain(self):
+    def get_active_domains(self):
         return self.conn.listAllDomains(5)
 
-    def get_inactive_domain(self):
+    def get_inactive_domains(self):
         return self.conn.listAllDomains(2)
 
-    def get_all_domain(self):
+    def get_all_domains(self):
         return self.conn.listAllDomains()
 
     def get_vnc_port_by_uuid(self, uuid):
