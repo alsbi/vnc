@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+<div class="container">
+
+    <div class="page-header">
+        <div class="header clearfix">
+            <h1><a href="/consoles">Server manager</a></h1>
+        </div>
+        <div class="text-right">
+            <a class="btn" href="/logout">Logout</a>
+        </div>
+    </div>
+
+
+    <div role="navigation" class="col-xs-8 col-sm-3 sidebar-offcanvas">
+        <dev class="panel">
+            {% block controll_btn  %}
+            {% endblock  %}
+        </dev>
+        <div class="panel">
+            <div class="panel-heading">Active</div>
+            <div class="panel-body">
+                {% for domain in domain_list %}
+                {% if domain.UUIDString()== id %}
+                <p><a class="btn btn-primary btn-md btn-block" href="/console/{{domain.UUIDString()}}" role="button">{{domain.name()}}</a>
+                </p>
+                {% else %}
+                <p><a class="btn btn-default btn-md btn-block" href="/console/{{domain.UUIDString()}}" role="button">{{domain.name()}}</a>
+                </p>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">Inactive</div>
+            <div class="panel-body">
+                {% for domain in domain_list_inactive %}
+                {% if name %}
+                <p><a class="btn btn-default btn-md btn-block" href="/console/{{domain.UUIDString()}}" role="button">{{domain.name()}}</a>
+                </p>
+                {% else %}
+                <p><a class="btn btn-default btn-md btn-block" href="/console/{{domain.UUIDString()}}" role="button">{{domain.name()}}</a>
+                </p>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        {% block main_content %}
+        {% endblock %}
+    </div>
+
+</div>
+</body>
+</html>

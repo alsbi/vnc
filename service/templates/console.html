@@ -1,0 +1,27 @@
+{% extends "base_manager.html" %}
+{% block controll_btn %}
+{{ super() }}
+<div class="dropdown">
+    <button class="btn dropdown-toggle btn-primary btn-block" type="button" data-toggle="dropdown">Options
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li><a href="{{id}}/start">Start</a></li>
+        <li><a href="{{id}}/shutdown">Shutdown</a></li>
+        <li><a href="{{id}}/stop">Stop</a></li>
+        <li><a href="{{id}}/restart">Reboot</a></li>
+        <li><a href="{{id}}/reset">Force reboot</a></li>
+    </ul>
+</div>
+{% endblock  %}
+
+{% block main_content  %}
+{{ super() }}
+<div class="col-xs-12 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading" align="center">Remote access {{id}}</div>
+        <div class="embed-responsive embed-responsive-16by9" style="background-color:black">
+            <iframe src="/view/{{id}}"></iframe>
+        </div>
+    </div>
+</div>
+{% endblock  %}

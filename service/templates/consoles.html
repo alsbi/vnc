@@ -1,0 +1,34 @@
+{% extends "base_manager.html" %}
+{% block controll_btn %}
+{{ super() }}
+<dev class="panel">
+    <div class="dropdown">
+        <button class="btn dropdown-toggle btn-primary btn-block" type="button" data-toggle="dropdown">Options
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="create">Create</a></li>
+        </ul>
+    </div>
+</dev>
+{% endblock  %}
+
+{% block main_content  %}
+{{ super() }}
+<div class="col-xs-12 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Host info</div>
+        <div class="panel-body">
+            {% for key,value in info.items() %}
+            <div class="panel panel-default panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{key}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{value}}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock  %}
