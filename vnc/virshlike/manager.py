@@ -7,8 +7,8 @@ from collections import OrderedDict
 
 import libvirt
 
-from virshlike.tools import utils
-from config import *
+from .tools import utils
+from ..config import *
 
 
 class Connector(object):
