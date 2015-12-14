@@ -8,11 +8,13 @@ from flask import Flask, render_template, session, request, redirect, url_for
 from ..virshlike import Manager
 from vnc_viewer.engine.errors import *
 from ..config import *
+from .proxy import Proxy, ProxyManager
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'templates')
 app = Flask(__name__, static_url_path = '{template}/static'.format(template = tmpl_dir), template_folder = tmpl_dir)
 app.secret_key = SECRET_KEY_APP
 mn = Manager()
+proxy_manager = ProxyManager(HOST_REMOTE_VIRSH)
 
 
 @app.route('/')
@@ -30,7 +32,12 @@ def get_domain_list():
 @app.route('/console/<vm_name>/<action>')
 def action_domain_by_uid(vm_name, action):
     if 'username' in session:
-        if action in ['stop', 'start', 'restart', 'shutdown', 'reset']:
+        if action in ['stop',
+                      'start',
+                      'restart',
+                      'shutdown',
+                      'reset'
+                      ]:
             getattr(mn, '%s_domain' % action)(vm_name)
         return view_domain(vm_name)
     else:
@@ -51,11 +58,14 @@ def view_domain(vm_name):
         password = mn.set_vnc_pass_by_uuid(vm_name)
     except Error_update_domain as e:
         password = ''
+
+    port = mn.get_vnc_port_by_uuid(vm_name)
+    proxy = ProxyManager.create(vm_name, port = port, host = HOST_LOCAL_VIRSH)
     return render_template('console.html',
                            host = HOST_REMOTE_VIRSH,
                            domain_list = mn.get_active_domains(), id = vm_name,
                            domain_list_inactive = mn.get_inactive_domains(),
-                           port = mn.get_vnc_port_by_uuid(vm_name),
+                           port = proxy.port,
                            password = password)
 
 
@@ -75,4 +85,4 @@ def logout():
 
 
 def start():
-    app.run(debug = True, host = '0.0.0.0')
+    app.run(debug = True, host = '0.0.0.0', threaded = True)

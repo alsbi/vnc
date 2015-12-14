@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 import libvirt
 
-from .tools import utils
+from .tools import Utils
 from ..config import *
 
 
@@ -29,9 +29,10 @@ class Connector(object):
         conn = libvirt.openAuth('qemu+tcp://{host}/system'.format(host = self.__host), auth, 0)
 
         if conn == None:
-            print('Failed to open connection to qemu+tcp://{host}/system'.format(host=self.__host), file = sys.stderr)
+            print('Failed to open connection to qemu+tcp://{host}/system'.format(host = self.__host), file = sys.stderr)
             exit(1)
         return conn
+
 
 class Manager(object):
     def __init__(self):
@@ -102,10 +103,10 @@ class Manager(object):
         return self.conn.listAllDomains()
 
     def get_vnc_port_by_uuid(self, uuid):
-        return utils.vnc_port(self.get_domain_by_uuid(uuid = uuid))
+        return Utils.vnc_port(self.get_domain_by_uuid(uuid = uuid))
 
     def set_vnc_pass_by_uuid(self, uuid):
-        return utils.set_vnc_passwd(self.get_domain_by_uuid(uuid = uuid))
+        return Utils.set_vnc_passwd(self.get_domain_by_uuid(uuid = uuid))
 
     def __del__(self):
         self.conn.close()

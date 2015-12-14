@@ -6,10 +6,11 @@ import string
 from random import *
 
 from libvirt import libvirtError
+
 from ..errors import *
 
 
-class utils(object):
+class Utils(object):
     @staticmethod
     def vnc_port(domain):
         xml = minidom.parseString(domain.XMLDesc(0))

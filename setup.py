@@ -22,7 +22,10 @@ setup(
     package_data = {'templates': ['*.html', 'static/*.js', 'static/*.css', 'static/*.png'],},
     author_email = 'feano4ik@gmail.com',
     description = '',
-    install_requires = ['libvirt-python', 'flask'],
+    install_requires = ['libvirt-python',
+                        'flask',
+                        'websockify',
+                        ],
     entry_points = {
         'console_scripts': [
             'vnc_daemon=vnc_viewer.engine:main'
