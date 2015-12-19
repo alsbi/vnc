@@ -11,7 +11,11 @@ from ..config import *
 
 
 class Connector(object):
-    def __init__(self, login=None, password=None, host=None):
+    def __init__(self,
+                 login=None,
+                 password=None,
+                 host=None):
+
         self.__login = login
         self.__pass = password
         self.__host = host
@@ -39,7 +43,9 @@ class Manager(object):
         self.login = SASL_USER
         self.password = SASL_PASS
         self.host = HOST_LOCAL_VIRSH
-        self.conn = Connector(login = self.login, password = self.password, host = self.host).connect()
+        self.conn = Connector(login = self.login,
+                              password = self.password,
+                              host = self.host).connect()
 
     def status(self):
         return OrderedDict([

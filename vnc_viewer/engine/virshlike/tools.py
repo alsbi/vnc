@@ -16,7 +16,7 @@ class Utils(object):
         xml = minidom.parseString(domain.XMLDesc(0))
         domainTypes = xml.getElementsByTagName('graphics')
         for domainType in domainTypes:
-            port = (domainType.getAttribute('websocket'))
+            port = (domainType.getAttribute('port'))
             if port:
                 return port
 

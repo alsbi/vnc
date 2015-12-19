@@ -11,10 +11,19 @@ from ..config import *
 from .proxy import Proxy, ProxyManager
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'templates')
-app = Flask(__name__, static_url_path = '{template}/static'.format(template = tmpl_dir), template_folder = tmpl_dir)
+app = Flask(__name__,
+            static_url_path = '{template}/static'.format(template = tmpl_dir),
+            template_folder = tmpl_dir)
 app.secret_key = SECRET_KEY_APP
 mn = Manager()
-proxy_manager = ProxyManager(HOST_REMOTE_VIRSH)
+proxy_manager = ProxyManager(listen_host = '0.0.0.0',
+                             target_host = '127.0.0.1')
+
+
+@app.before_request
+def beforeRequest():
+    if 'https' not in request.url:
+        return redirect(request.url.replace('http', 'https'))
 
 
 @app.route('/')
@@ -36,8 +45,7 @@ def action_domain_by_uid(vm_name, action):
                       'start',
                       'restart',
                       'shutdown',
-                      'reset'
-                      ]:
+                      'reset']:
             getattr(mn, '%s_domain' % action)(vm_name)
         return view_domain(vm_name)
     else:
@@ -49,6 +57,7 @@ def domain_by_uid(vm_name):
     if 'username' in session:
         return view_domain(vm_name)
     else:
+        request.url.replace("http://", "https://")
         return redirect(url_for('login'))
 
 
@@ -60,12 +69,12 @@ def view_domain(vm_name):
         password = ''
 
     port = mn.get_vnc_port_by_uuid(vm_name)
-    proxy = ProxyManager.create(vm_name, port = port, host = HOST_LOCAL_VIRSH)
+    proxy = proxy_manager.create(uuid = vm_name, port = port)
     return render_template('console.html',
                            host = HOST_REMOTE_VIRSH,
                            domain_list = mn.get_active_domains(), id = vm_name,
                            domain_list_inactive = mn.get_inactive_domains(),
-                           port = proxy.port,
+                           port = proxy.listen_port,
                            password = password)
 
 
@@ -85,4 +94,6 @@ def logout():
 
 
 def start():
-    app.run(debug = True, host = '0.0.0.0', threaded = True)
+    app.run(debug = True,
+            host = '0.0.0.0',
+            threaded = True)
